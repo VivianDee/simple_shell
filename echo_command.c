@@ -2,8 +2,7 @@
 
 int echo_command(char *parameters[])
 {
-	char *copy = strdup(parameters[1]);
-	char *variable = getenv(copy + 1), *last_exit_code = getenv("LASTEXITCODE");
+	char *variable = getenv(parameters[1] + 1), *last_exit_code = getenv("LASTEXITCODE");
 	pid_t id = getpid();
 
 	if (parameters[1][1] == '?' && last_exit_code)

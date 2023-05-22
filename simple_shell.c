@@ -26,10 +26,10 @@ int main(int ac, char **av)
 		}
 		input = _strtok(input, "\n");
 		check_command(input);
+		free(input);
 		fflush(stdout);
 		fflush(stdout);
 	}
 
-	free(input);
 	return (0);
 }

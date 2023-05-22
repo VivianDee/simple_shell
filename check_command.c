@@ -5,9 +5,9 @@
 
 void check_command(char *input)
 {
-	char *input_copy = strdup(input), *delimiters[] = {"&&", "||", ";", NULL}, error_no[10];
+	char *input_copy = input, *delimiters[] = {"&&", "||", ";", NULL}, error_no[10];
 	char *parameters[LETTERS], *logicalOps[LETTERS], *token;
-	int isbuiltin = 0, it_exists = 0, status = 0, background = 0, count = 0, i = 0;
+	int isbuiltin = 0, it_exists = 0, status = 0, background = 0, count = 0, i = 0, len = -1;
 
 	if (strstr(input, "&&") != NULL)
 		remove_spaces_around_delimiter(input_copy, "&&");
@@ -15,19 +15,15 @@ void check_command(char *input)
 		remove_spaces_around_delimiter(input_copy, "||");
 	if (strstr(input, ";") != NULL)
 		remove_spaces_around_delimiter(input_copy, ";");
-
 	count = countDelimiter(input_copy, delimiters, logicalOps);
-
 	token = _strtok2_strings(input_copy, delimiters);
 	while (token != NULL)
 	{
-		background = command_buffer(token, parameters);
-		isbuiltin = check_builtin(parameters);
+		background = command_buffer(token, parameters, &len);
+		isbuiltin = check_builtin(parameters, input);
 		if (!isbuiltin)
 			it_exists = command_exists(parameters);
-
 		status += it_exists;
-
 		if (count >= 0 && i > 0)
 		{
 			if ((strstr(logicalOps[i - 1], "&&") != NULL) && status != 1)
@@ -35,17 +31,16 @@ void check_command(char *input)
 			else if ((strstr(logicalOps[i - 1], "||") != NULL) && status == 1)
 				status = 0;
 		}
-
 		if (!isbuiltin && it_exists && status)
 		{
 			status = execute_command(parameters, background);
 			sprintf(error_no, "%d", status);
 			setenv("LASTEXITCODE", error_no, 1);
 		}
-
 		token = _strtok2_strings(NULL, delimiters);
 		count--;
 		i++;
+		free_parameter_array(parameters);
 	}
 }
 
@@ -67,7 +62,7 @@ int command_exists(char *parameters[])
 	return (1);
 }
 
-int check_builtin(char *parameters[])
+int check_builtin(char *parameters[], char *input)
 {
 	int exit_code = 0;
 
@@ -78,10 +73,16 @@ int check_builtin(char *parameters[])
 		{
 			exit_code = atoi(parameters[1]);
 			setenv("LASTEXITCODE", parameters[1], 1);
+			free_parameter_array(parameters);
+			free(input);
 			exit(exit_code);
 		}
 		else
+		{
+			free_parameter_array(parameters);
+			free(input);
 			exit(0);
+		}
 	}
 	if (parameters[0] && strstr(parameters[0], "cd") != NULL)
 	{
@@ -103,7 +104,7 @@ int check_builtin(char *parameters[])
 	return (0);
 }
 
-int command_buffer(char *input, char *parameter[])
+int command_buffer(char *input, char *parameter[], int *len)
 {
 	int i = 0, background = 0;
 	char path[100];
@@ -119,6 +120,7 @@ int command_buffer(char *input, char *parameter[])
 
 	if (i == 0)
 		return (1);
+	*len = i;
 
 	if (strstr(parameter[0], "exit") != NULL)
 	{
@@ -143,4 +145,15 @@ int command_buffer(char *input, char *parameter[])
 	}
 
 	return (background);
+}
+
+void free_parameter_array(char *parameter[])
+{
+	int i;
+
+	for (i = 0; parameter[i] != NULL; i++)
+	{
+		free(parameter[i]);
+		parameter[i] = NULL;
+	}
 }
