@@ -1,5 +1,13 @@
 #include "main.h"
 
+/**
+ *main - This is where the ultimate read-while loop occurs
+ *it prints the prompt each time and also ensures the input
+ *get displayed one at a time with the help of fflush
+ *@ac: is the number of argument
+ *@av: is the argument vector-string input by user
+ *Return: 0 on success
+ */
 int main(int ac, char **av)
 {
 	char *input = NULL;
@@ -15,7 +23,7 @@ int main(int ac, char **av)
 		read_chars = _getline(&input, &len, stdin);
 		if (read_chars <= 0)
 		{
-			if(ac > 1)
+			if (ac > 1)
 			perror("_getline");
 			return (-1);
 		}

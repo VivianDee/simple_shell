@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ *change_directory - changes the location to a given directory
+ *@parameters: is the destination directory
+ *Return: nothing
+ */
+
 void change_directory(char *parameters[])
 {
 	char *prev_dir = getenv("OLDPWD"), *home_dir = getenv("HOME"), error_no[10];
@@ -11,7 +17,9 @@ void change_directory(char *parameters[])
 		{
 			if (prev_dir)
 			{
-				if ((error = chdir(prev_dir)) != 0)
+				error = chdir(prev_dir);
+
+				if (error != 0)
 					perror("cd");
 
 				sprintf(error_no, "%d", error);
@@ -20,7 +28,9 @@ void change_directory(char *parameters[])
 		}
 		else
 		{
-			if ((error = chdir(parameters[1])) != 0)
+			error = chdir(parameters[1]);
+
+			if (error != 0)
 				perror("cd");
 
 			sprintf(error_no, "%d", error);
@@ -31,18 +41,23 @@ void change_directory(char *parameters[])
 	{
 		if (home_dir)
 		{
-			if ((error = chdir(home_dir)) != 0)
+			error = chdir(home_dir);
+
+			if (error != 0)
 				perror("cd");
 
 			sprintf(error_no, "%d", error);
 			setenv("LASTEXITCODE", error_no, 1);
 		}
 	}
-
 	update_pwd_in_env();
 }
 
-void update_pwd_in_env()
+/**
+ *update_pwd_in_env - effects the change made to the present working directory
+ *Return: nothing
+ */
+void update_pwd_in_env(void)
 {
 	char cwd[LETTERS];
 

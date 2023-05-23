@@ -1,9 +1,13 @@
 #include "main.h"
-
-
+/**
+ *_strtok - Splits strings into its constituent parts
+ *@string1: is the first string
+ *@string2: is the second string
+ *Return: NULL
+ */
 char *_strtok(char *string1, const char *string2)
 {
-	static char *last_token = NULL;
+	static char *last_token;
 	unsigned int i, j;
 
 	if (string2 == NULL || string2[0] == '\0')
@@ -38,10 +42,15 @@ char *_strtok(char *string1, const char *string2)
 
 	return (NULL);
 }
-
+/**
+ *_strtok2_strings - Tokenizes string
+ *@string1: Is the first string
+ *@string2: Is the second string
+ *Return: NULL
+ */
 char *_strtok2_strings(char *string1, char *string2[])
 {
-	static char *last_token = NULL;
+	static char *last_token;
 	unsigned int i, j;
 	const char *delimiter;
 	int delimiter_length;

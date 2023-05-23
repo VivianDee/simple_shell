@@ -1,5 +1,11 @@
 #include "main.h"
-
+/**
+ *remove_spaces_around_delimiter - is a function for parsing the
+ *the string input, ensures the space are removed correctly
+ *@delimiter: Is what defines the separator string in the input
+ *@input: Is the user input on the stdin stream
+ *Return: void
+ */
 void remove_spaces_around_delimiter(char *input, const char *delimiter)
 {
 	int delimiter_length = strlen(delimiter);
@@ -36,8 +42,13 @@ void remove_spaces_around_delimiter(char *input, const char *delimiter)
 		start = strstr(start + delimiter_length, delimiter);
 	}
 }
-
-
+/**
+ *countDelimiter - It counts the number of delimeters present
+ *@input: is the user input
+ *@delimiters: This are the array options passed as delimiters
+ *@logicalOps: They are the array of logical operators given
+ *Return: the number of delimeters
+ */
 int countDelimiter(char *input, char *delimiters[], char *logicalOps[])
 {
 	int count = 0, i;

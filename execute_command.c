@@ -1,5 +1,12 @@
 #include "main.h"
-
+/**
+ *execute_command - This function is where forking and exec'ing
+ *of a child process takes place depending on the type of job
+ *@parameters: Is the command options/argument being parsed
+ *@background: The return value for background process check
+ *to acertain the type of job a process is
+ *Return: 1 on success
+ */
 int execute_command(char *parameters[], int background)
 {
 	int status;

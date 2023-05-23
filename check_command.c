@@ -1,13 +1,18 @@
 #include "main.h"
 
-
-
-
+/**
+  *check_command - Screen the command line input for logical
+  *operators and parses them accordingly
+  *@input: This is the string read from command line
+  *Return: Void
+  */
 void check_command(char *input)
 {
-	char *input_copy = input, *delimiters[] = {"&&", "||", ";", NULL}, error_no[10];
+	char *input_copy = input, *delimiters[] = {"&&", "||", ";", NULL};
+	char error_no[10];
 	char *parameters[LETTERS], *logicalOps[LETTERS], *token;
-	int isbuiltin = 0, it_exists = 0, status = 0, background = 0, count = 0, i = 0, len = -1;
+	int isbuiltin = 0, it_exists = 0, status = 0, background = 0;
+	int count = 0, i = 0, len = -1;
 
 	if (strstr(input, "&&") != NULL)
 		remove_spaces_around_delimiter(input_copy, "&&");
@@ -44,6 +49,12 @@ void check_command(char *input)
 	}
 }
 
+/**
+ *command_exists - Check if the binary file for the requested command exists
+ *@parameters: is the unit of arguments received from the from the input
+ *as a result of splitting the string input
+ *Return: 1 on success
+ */
 int command_exists(char *parameters[])
 {
 	struct stat buffer;
@@ -62,6 +73,14 @@ int command_exists(char *parameters[])
 	return (1);
 }
 
+/**
+ *check_builtin - This checks for whether the requested command
+ *shell builtin command.
+ *@input: Is the actual input by user before splitting occurs
+ *@parameters: is the refined strings from the user's input
+ *Return: 1 or 0 depending on the condition of whether a command
+ *is builtin or not
+ */
 int check_builtin(char *parameters[], char *input)
 {
 	int exit_code = 0;
@@ -104,6 +123,14 @@ int check_builtin(char *parameters[], char *input)
 	return (0);
 }
 
+/**
+ *command_buffer - This is the function where the parsing of the command
+ *line takes place
+ *@input: The user input string is held by this variable
+ *@parameter: storage of the split string is inside the parameters
+ *@len: Is the length of the given string given as input
+ *Return: true if the process is backgroud or false foreground process
+ */
 int command_buffer(char *input, char *parameter[], int *len)
 {
 	int i = 0, background = 0;
@@ -127,8 +154,8 @@ int command_buffer(char *input, char *parameter[], int *len)
 		background = 1;
 		return (background);
 	}
-
-	if ((background = *parameter[i - 1] == '&') != 0)
+	background = *parameter[i - 1] == '&';
+	if (background != 0)
 	{
 		parameter[i - 1] = NULL;
 	}
@@ -147,6 +174,11 @@ int command_buffer(char *input, char *parameter[], int *len)
 	return (background);
 }
 
+/**
+ *free_parameter_array - deallocates all memory usage by the input string
+ *@parameter: This is the pointer to array of string that must be freed
+ *Return: Void
+ */
 void free_parameter_array(char *parameter[])
 {
 	int i;

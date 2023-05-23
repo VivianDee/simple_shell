@@ -1,8 +1,16 @@
 #include "main.h"
 
+/**
+ *echo_command - This is responsible for getting the
+ *exit status of previous command and parent pid when echo $?
+ *or echo $$ is run
+ *@parameters: Is the command line arguments array
+ *Return: 0 on success
+ */
 int echo_command(char *parameters[])
 {
-	char *variable = getenv(parameters[1] + 1), *last_exit_code = getenv("LASTEXITCODE");
+	char *variable = getenv(parameters[1] + 1);
+	char *last_exit_code = getenv("LASTEXITCODE");
 	pid_t id = getpid();
 
 	if (parameters[1][1] == '?' && last_exit_code)
