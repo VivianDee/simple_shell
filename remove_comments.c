@@ -12,7 +12,7 @@ void remove_comments(char *parameters[])
 
 	for (i = 0; parameters[i] != NULL; i++)
 	{
-		if (strstr(parameters[i], "#") != NULL)
+		if (_strstr(parameters[i], "#") != NULL)
 			parameters[i] = NULL;
 	}
 }

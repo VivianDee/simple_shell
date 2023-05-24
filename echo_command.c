@@ -9,8 +9,8 @@
  */
 int echo_command(char *parameters[])
 {
-	char *variable = getenv(parameters[1] + 1);
-	char *last_exit_code = getenv("LASTEXITCODE");
+	char *variable = _getenv(parameters[1] + 1);
+	char *last_exit_code = _getenv("LASTEXITCODE");
 	pid_t id = getpid();
 
 	if (parameters[1][1] == '?' && last_exit_code)
@@ -21,19 +21,19 @@ int echo_command(char *parameters[])
 	else if (parameters[1][1] == '$')
 	{
 		printf("%d\n", id);
-		setenv("LASTEXITCODE", "0", 1);
+		_setenv("LASTEXITCODE", "0", 1);
 		return (1);
 	}
 	else if (variable)
 	{
 		printf("%s\n", variable);
-		setenv("LASTEXITCODE", "0", 1);
+		_setenv("LASTEXITCODE", "0", 1);
 		return (1);
 	}
-	else if (strlen(parameters[1]) > 1)
+	else if (_strlen(parameters[1]) > 1)
 	{
 		putchar('\n');
-		setenv("LASTEXITCODE", "0", 1);
+		_setenv("LASTEXITCODE", "0", 1);
 		return (1);
 	}
 

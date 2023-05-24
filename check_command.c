@@ -19,7 +19,7 @@ void check_command(char *input, char *programName)
 	struct data data = {"\0"};
 
 	for (k = 0; delimiters[k] != NULL; k++)
-		if (strstr(input, delimiters[k]) != NULL)
+		if (_strstr(input, delimiters[k]) != NULL)
 			remove_spaces_around_delimiter(input, delimiters[i]);
 	count = countDelimiter(input_copy, delimiters, logicalOps);
 	token = _strtok2_strings(input_copy, delimiters);
@@ -32,16 +32,16 @@ void check_command(char *input, char *programName)
 			status += (it_exists = command_exists(parameters, programName, &data));
 		if (count >= 0 && i > 0)
 		{
-			if ((strstr(logicalOps[i - 1], "&&") != NULL) && status != 1)
+			if ((_strstr(logicalOps[i - 1], "&&") != NULL) && status != 1)
 				status = 0;
-			else if ((strstr(logicalOps[i - 1], "||") != NULL) && status == 1)
+			else if ((_strstr(logicalOps[i - 1], "||") != NULL) && status == 1)
 				status = 0;
 		}
 		if (!isbuiltin && it_exists && status)
 		{
 			status = execute_command(parameters, background, programName, &data);
 			sprintf(error_no, "%d", status);
-			setenv("LASTEXITCODE", error_no, 1);
+			_setenv("LASTEXITCODE", error_no, 1);
 		}
 		token = _strtok2_strings(NULL, delimiters);
 		count--;
@@ -70,7 +70,7 @@ int command_exists(char *parameters[], char *programName, struct data *data)
 	else if (execve(parameters[0], parameters, NULL) < 0)
 	{
 		print_error(programName, "%s: %s", data->command, strerror(errno));
-		setenv("LASTEXITCODE", "127", 1);
+		_setenv("LASTEXITCODE", "127", 1);
 		return (0);
 	}
 
@@ -90,12 +90,12 @@ int check_builtin(char *parameters[], char *input)
 	int exit_code = 0;
 
 	remove_comments(parameters);
-	if (parameters[0] && strstr(parameters[0], "exit") != NULL)
+	if (parameters[0] && _strstr(parameters[0], "exit") != NULL)
 	{
 		if (parameters[1])
 		{
 			exit_code = atoi(parameters[1]);
-			setenv("LASTEXITCODE", parameters[1], 1);
+			_setenv("LASTEXITCODE", parameters[1], 1);
 			free_parameter_array(parameters);
 			free(input);
 			exit(exit_code);
@@ -107,20 +107,20 @@ int check_builtin(char *parameters[], char *input)
 			exit(0);
 		}
 	}
-	if (parameters[0] && strstr(parameters[0], "cd") != NULL)
+	if (parameters[0] && _strstr(parameters[0], "cd") != NULL)
 	{
 		change_directory(parameters);
 		return (1);
 	}
-	if (strstr(parameters[0], "echo") != NULL)
+	if (_strstr(parameters[0], "echo") != NULL)
 	{
 		if (parameters[1] == NULL)
 		{
-			setenv("LASTEXITCODE", "0", 1);
+			_setenv("LASTEXITCODE", "0", 1);
 			putchar('\n');
 			return (1);
 		}
-		if (strstr(parameters[1], "$") != NULL)
+		if (_strstr(parameters[1], "$") != NULL)
 			return (echo_command(parameters));
 	}
 
@@ -143,7 +143,7 @@ int command_buffer(char *input, char *parameter[], int *len)
 	parameter[i] = _strtok(input, " \n\t\r");
 	while (parameter[i] != NULL)
 	{
-		parameter[i] = strdup(parameter[i]);
+		parameter[i] = _strdup(parameter[i]);
 		i++;
 		parameter[i] = _strtok(NULL, " \n");
 	}
@@ -153,7 +153,7 @@ int command_buffer(char *input, char *parameter[], int *len)
 		return (1);
 	*len = i;
 
-	if (strstr(parameter[0], "exit") != NULL)
+	if (_strstr(parameter[0], "exit") != NULL)
 	{
 		background = 1;
 		return (background);
@@ -163,16 +163,16 @@ int command_buffer(char *input, char *parameter[], int *len)
 	{
 		parameter[i - 1] = NULL;
 	}
-	if (strstr(parameter[0], "cd") != NULL)
+	if (_strstr(parameter[0], "cd") != NULL)
 	{
 		background = 1;
 		return (background);
 	}
-	if (strstr(parameter[0], "/") == NULL)
+	if (_strstr(parameter[0], "/") == NULL)
 	{
 		snprintf(path, sizeof(path), "/bin/%s", parameter[0]);
 		free(parameter[0]);
-		parameter[0] = strdup(path);
+		parameter[0] = _strdup(path);
 	}
 
 	return (background);

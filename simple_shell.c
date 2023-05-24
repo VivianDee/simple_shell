@@ -1,5 +1,17 @@
 #include "main.h"
+#include <signal.h>
 
+/**
+ *sig_handler - Handles the signal interrupt signal
+ *@signo: Is the signal number received by the process
+ *Return: Void
+ */
+void sig_handler(int signo)
+{
+	(void)signo;
+	printf("\n[VT~#] ");
+	fflush(stdout);
+}
 /**
  *main - This is where the ultimate read-while loop occurs
  *it prints the prompt each time and also ensures the input
@@ -15,6 +27,8 @@ int main(int ac, char *av[])
 	ssize_t read_chars;
 
 	ac = ac;
+	
+	signal(SIGINT, sig_handler);
 
 	while (1)
 	{

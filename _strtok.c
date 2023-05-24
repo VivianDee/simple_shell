@@ -21,7 +21,7 @@ char *_strtok(char *string1, const char *string2)
 	if (string1 != NULL && string1[0] != '\0')
 	{
 		last_token = string1;
-		for (i = 0; i != (strlen(string1) + 1); i++)
+		for (i = 0; i != (_strlen(string1) + 1); i++)
 		{
 			if (string1[i] == '\0')
 			{
@@ -65,7 +65,7 @@ char *_strtok2_strings(char *string1, char *string2[])
 	if (string1 != NULL && string1[0] != '\0')
 	{
 		last_token = string1;
-		for (i = 0; i < strlen(string1); i++)
+		for (i = 0; i < _strlen(string1); i++)
 		{
 			if (string1[i] == '\0')
 			{
@@ -74,9 +74,9 @@ char *_strtok2_strings(char *string1, char *string2[])
 			for (j = 0; string2[j] != NULL; j++)
 			{
 				delimiter = string2[j];
-				delimiter_length = strlen(delimiter);
+				delimiter_length = _strlen(delimiter);
 
-				if (strncmp(string1 + i, delimiter, delimiter_length) == 0)
+				if (_strncmp(string1 + i, delimiter, delimiter_length) == 0)
 				{
 					string1[i] = '\0';
 					last_token = string1 + i + delimiter_length;

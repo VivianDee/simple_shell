@@ -8,12 +8,12 @@
 
 void change_directory(char *parameters[])
 {
-	char *prev_dir = getenv("OLDPWD"), *home_dir = getenv("HOME"), error_no[10];
+	char *prev_dir = _getenv("OLDPWD"), *home_dir = _getenv("HOME"), error_no[10];
 	int error = 1;
 
 	if (parameters[1])
 	{
-		if (strstr(parameters[1], "-") != NULL)
+		if (_strstr(parameters[1], "-") != NULL)
 		{
 			error = chdir(prev_dir);
 
@@ -21,7 +21,7 @@ void change_directory(char *parameters[])
 				perror("cd");
 
 			sprintf(error_no, "%d", error);
-			setenv("LASTEXITCODE", error_no, 1);
+			_setenv("LASTEXITCODE", error_no, 1);
 		} else
 		{
 			error = chdir(parameters[1]);
@@ -30,7 +30,7 @@ void change_directory(char *parameters[])
 				perror("cd");
 
 			sprintf(error_no, "%d", error);
-			setenv("LASTEXITCODE", error_no, 1);
+			_setenv("LASTEXITCODE", error_no, 1);
 		}
 	} else
 	{
@@ -40,7 +40,7 @@ void change_directory(char *parameters[])
 			perror("cd");
 
 		sprintf(error_no, "%d", error);
-		setenv("LASTEXITCODE", error_no, 1);
+		_setenv("LASTEXITCODE", error_no, 1);
 	}
 	update_pwd_in_env();
 }
@@ -55,7 +55,7 @@ void update_pwd_in_env(void)
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		setenv("PWD", cwd, 1);
+		_setenv("PWD", cwd, 1);
 	}
 	else
 	{

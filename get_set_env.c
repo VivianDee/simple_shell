@@ -8,7 +8,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 	char *env_entry = NULL;
 	int result = 0;
 
-	    if (name == NULL || value == NULL)
+	if (name == NULL || value == NULL)
 		    return (-1);
 
 	if (!overwrite && _getenv(name) != NULL)
@@ -56,7 +56,7 @@ char *_getenv(const char *name)
 int _putenv(const char *string)
 {
 	char **new_environ = NULL, **env_var = NULL;
-	size_t string_length = strlen(string);
+	size_t string_length = _strlen(string);
 
 	if (string == NULL || string[0] == '\0' || string_length == 0)
 		return (-1);
@@ -77,7 +77,7 @@ int _putenv(const char *string)
 	if (new_environ == NULL)
 		return (-1);
 
-	new_environ[env_var - environ] = strdup(string);
+	new_environ[env_var - environ] = _strdup(string);
 	if (new_environ[env_var - environ] == NULL)
 		return (-1);
 

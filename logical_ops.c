@@ -8,11 +8,11 @@
  */
 void remove_spaces_around_delimiter(char *input, const char *delimiter)
 {
-	int delimiter_length = strlen(delimiter);
-	int text_length = strlen(input);
+	int delimiter_length = _strlen(delimiter);
+	int text_length = _strlen(input);
 	int i, j;
 	char *space_pos;
-	char *start = strstr(input, delimiter);
+	char *start = _strstr(input, delimiter);
 
 	while (start != NULL)
 	{
@@ -24,10 +24,10 @@ void remove_spaces_around_delimiter(char *input, const char *delimiter)
 			}
 			text_length--;
 		}
-		start = strstr(start + delimiter_length, delimiter);
+		start = _strstr(start + delimiter_length, delimiter);
 	}
 
-	start = strstr(input, delimiter);
+	start = _strstr(input, delimiter);
 	while (start != NULL)
 	{
 		space_pos = start + delimiter_length;
@@ -39,7 +39,7 @@ void remove_spaces_around_delimiter(char *input, const char *delimiter)
 			}
 			text_length--;
 		}
-		start = strstr(start + delimiter_length, delimiter);
+		start = _strstr(start + delimiter_length, delimiter);
 	}
 }
 /**
@@ -58,7 +58,7 @@ int countDelimiter(char *input, char *delimiters[], char *logicalOps[])
 	{
 		for (i = 0; delimiters[i] != NULL; i++)
 		{
-			if (strncmp(ptr, delimiters[i], strlen(delimiters[i])) == 0)
+			if (_strncmp(ptr, delimiters[i], _strlen(delimiters[i])) == 0)
 			{
 				logicalOps[count] = delimiters[i];
 				count++;
