@@ -6,10 +6,11 @@
  *@signo: Is the signal number received by the process
  *Return: Void
  */
-void sig_handler(int signo)
+void handle_sig(int signo)
 {
 	(void)signo;
-	printf("\n[VT~#] ");
+	write(STDOUT_FILENO, "\n", 2);
+	write(STDOUT_FILENO, "[VT~#] ", 8);
 	fflush(stdout);
 }
 /**
@@ -28,7 +29,7 @@ int main(int ac, char *av[])
 
 	ac = ac;
 	
-	signal(SIGINT, sig_handler);
+	signal(SIGINT, handle_sig);
 
 	while (1)
 	{
