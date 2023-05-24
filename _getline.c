@@ -26,7 +26,7 @@ size_t _getline(char **lineptr, size_t *n, FILE *stream)
 			return (-1);
 		}
 
-		new_buff = (char *)realloc(buff, (total_chars + read_chars + 1) * sizeof(char));
+		new_buff = realloc(buff, (total_chars + read_chars + 1) * sizeof(char));
 		if (new_buff == NULL)
 		{
 			perror("realloc");

@@ -15,15 +15,19 @@ int main(int ac, char **av)
 	ssize_t read_chars;
 
 	(void)av;
+	(void)ac;
 
 	while (1)
 	{
-		printf("[VT~#] ");
-		fflush(stdout);
+		if (isatty(fileno(stdin)))
+		{
+			printf("[VT~#] ");
+			fflush(stdout);
+		}
 		read_chars = _getline(&input, &len, stdin);
 		if (read_chars <= 0)
 		{
-			if (ac > 1)
+			if (isatty(fileno(stdin)))
 			perror("_getline");
 			return (-1);
 		}
