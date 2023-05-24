@@ -42,12 +42,11 @@ int countDelimiter(char *input, char *delimiters[], char *logicalOps[]);
 void error_data(struct data *data, char *token);
 void check_command(char *input, char *programName);
 int _putenv(const char *string);
-void sig_handler(int signo);
+void handle_sig(int signo);
 char *_strdup(const char *source);
 char *_getenv(const char *name);
 int _strncmp(const char *s1, const char *s2, size_t n);
 size_t _strlen(const char *str);
-/*size_t _getline(char **lineptr, size_t *n, FILE *stream);*/
 char *_strstr(const char *haystack, const char *needle);
 int _strcmp(const char *str1, const char *str2);
 int _setenv(const char *name, const char *value, int overwrite);
