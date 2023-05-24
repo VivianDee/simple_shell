@@ -8,14 +8,13 @@
  *@av: is the argument vector-string input by user
  *Return: 0 on success
  */
-int main(int ac, char **av)
+int main(int ac, char *av[])
 {
 	char *input = NULL;
 	size_t len = 0;
 	ssize_t read_chars;
 
-	(void)av;
-	(void)ac;
+	ac = ac;
 
 	while (1)
 	{
@@ -37,7 +36,7 @@ int main(int ac, char **av)
 			exit(0);
 		}
 		input = _strtok(input, "\n");
-		check_command(input);
+		check_command(input, av[0]);
 		free(input);
 		fflush(stdout);
 		fflush(stdout);

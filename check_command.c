@@ -1,18 +1,22 @@
 #include "main.h"
 
+
 /**
-  *check_command - Screen the command line input for logical
+  * check_command - Screen the command line input for logical
   *operators and parses them accordingly
-  *@input: This is the string read from command line
-  *Return: Void
+  * @input: This is the string read from command line
+  * @programName: The name of the program.
+  *
+  * Return: Void
   */
-void check_command(char *input)
+void check_command(char *input, char *programName)
 {
 	char *input_copy = input, *delimiters[] = {"&&", "||", ";", NULL};
 	char error_no[10];
 	char *parameters[LETTERS], *logicalOps[LETTERS], *token;
 	int isbuiltin = 0, it_exists = 0, status = 0, background = 0;
 	int count = 0, i = 0, len = -1;
+	struct data data = {"\0"};
 
 	if (strstr(input, "&&") != NULL)
 		remove_spaces_around_delimiter(input_copy, "&&");
@@ -24,11 +28,11 @@ void check_command(char *input)
 	token = _strtok2_strings(input_copy, delimiters);
 	while (token != NULL)
 	{
+		error_data(&data, token);
 		background = command_buffer(token, parameters, &len);
 		isbuiltin = check_builtin(parameters, input);
 		if (!isbuiltin)
-			it_exists = command_exists(parameters);
-		status += it_exists;
+			status += (it_exists = command_exists(parameters, programName, &data));
 		if (count >= 0 && i > 0)
 		{
 			if ((strstr(logicalOps[i - 1], "&&") != NULL) && status != 1)
@@ -38,7 +42,7 @@ void check_command(char *input)
 		}
 		if (!isbuiltin && it_exists && status)
 		{
-			status = execute_command(parameters, background);
+			status = execute_command(parameters, background, programName, &data);
 			sprintf(error_no, "%d", status);
 			setenv("LASTEXITCODE", error_no, 1);
 		}
@@ -50,12 +54,14 @@ void check_command(char *input)
 }
 
 /**
- *command_exists - Check if the binary file for the requested command exists
- *@parameters: is the unit of arguments received from the from the input
- *as a result of splitting the string input
- *Return: 1 on success
+ * command_exists - Check if the binary file for the requested command exists
+ * @parameters: is the unit of arguments received from the from the input
+ * @programName: The name of the program.
+ * @data: A structure to save the command.
+ *
+ * Return: 1 on success
  */
-int command_exists(char *parameters[])
+int command_exists(char *parameters[], char *programName, struct data *data)
 {
 	struct stat buffer;
 
@@ -65,7 +71,7 @@ int command_exists(char *parameters[])
 	}
 	else if (execve(parameters[0], parameters, NULL) < 0)
 	{
-		perror("execve");
+		print_error(programName, "%s: %s", data->command, strerror(errno));
 		setenv("LASTEXITCODE", "127", 1);
 		return (0);
 	}

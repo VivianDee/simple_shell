@@ -4,10 +4,12 @@
  *of a child process takes place depending on the type of job
  *@parameters: Is the command options/argument being parsed
  *@background: The return value for background process check
- *to acertain the type of job a process is
+ *@programName: The name of the program.
+ *@data: A structure to save the command.
+ *
  *Return: 1 on success
  */
-int execute_command(char *parameters[], int background)
+int execute_command(char *parameters[], int background, char *programName, data *data)
 {
 	int status;
 	pid_t pid = fork();
@@ -15,7 +17,7 @@ int execute_command(char *parameters[], int background)
 	if (pid == 0)
 	{
 		execve(parameters[0], parameters, environ);
-		perror("execve");
+		print_error(programName, "%s: %s", data->command, strerror(errno));
 		exit(0);
 	}
 	else if (pid > 0)

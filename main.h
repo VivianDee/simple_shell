@@ -1,6 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
@@ -15,8 +16,21 @@
 
 #define LETTERS 1024
 
+/**
+ * struct data - Data structure for storing command information.
+ *
+ * @command: Array to store the command string.
+ */
+
+typedef struct data
+{
+	char command[LETTERS];
+} data;
+
 extern char **environ;
 
+void error_data(struct data *data, char *token);
+void print_error(char *programName, const char *format, ...);
 char *_strtok(char *string1, const char *string2);
 char *_strtok2_strings(char *string1, char *string2[]);
 size_t _getline(char **lineptr, size_t *n, FILE *stream);
@@ -27,11 +41,11 @@ void change_directory(char *parameters[]);
 void remove_comments(char *parameters[]);
 int echo_command(char *parameters[]);
 int check_builtin(char *parameters[], char *input);
-int command_exists(char *parameters[]);
-int execute_command(char *parameters[], int background);
+int command_exists(char *parameters[], char *programName, struct data *data);
+int execute_command(char *parameters[], int background, char *programName, struct data *data);
 void remove_spaces_around_delimiter(char *input, const char *delimiter);
 int countDelimiter(char *input, char *delimiters[], char *logicalOps[]);
-void check_command(char *input);
+void check_command(char *input, char *programName);
 int main(int ac, char **av);
 
 
