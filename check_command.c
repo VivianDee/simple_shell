@@ -15,15 +15,12 @@ void check_command(char *input, char *programName)
 	char error_no[10];
 	char *parameters[LETTERS], *logicalOps[LETTERS], *token;
 	int isbuiltin = 0, it_exists = 0, status = 0, background = 0;
-	int count = 0, i = 0, len = -1;
+	int count = 0, i = 0, k = 0, len = -1;
 	struct data data = {"\0"};
 
-	if (strstr(input, "&&") != NULL)
-		remove_spaces_around_delimiter(input_copy, "&&");
-	if (strstr(input, "||") != NULL)
-		remove_spaces_around_delimiter(input_copy, "||");
-	if (strstr(input, ";") != NULL)
-		remove_spaces_around_delimiter(input_copy, ";");
+	for (k = 0; delimiters[k] != NULL; k++)
+		if (strstr(input, delimiters[k]) != NULL)
+			remove_spaces_around_delimiter(input, delimiters[i]);
 	count = countDelimiter(input_copy, delimiters, logicalOps);
 	token = _strtok2_strings(input_copy, delimiters);
 	while (token != NULL)
@@ -51,6 +48,7 @@ void check_command(char *input, char *programName)
 		i++;
 		free_parameter_array(parameters);
 	}
+	free(input);
 }
 
 /**

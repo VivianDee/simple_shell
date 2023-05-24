@@ -28,6 +28,7 @@ int main(int ac, char *av[])
 		{
 			if (isatty(fileno(stdin)))
 			perror("_getline");
+			free(input);
 			return (-1);
 		}
 		if (feof(stdin))
@@ -37,7 +38,6 @@ int main(int ac, char *av[])
 		}
 		input = _strtok(input, "\n");
 		check_command(input, av[0]);
-		free(input);
 		fflush(stdout);
 		fflush(stdout);
 	}
