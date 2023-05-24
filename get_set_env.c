@@ -52,37 +52,56 @@ char *_getenv(const char *name)
 	    return (NULL);
 }
 
-
 int _putenv(const char *string)
 {
-	char **new_environ = NULL, **env_var = NULL;
-	size_t string_length = _strlen(string);
+    char **new_environ = NULL, **env_var = NULL;
+    size_t string_length = _strlen(string), i, j, env_count;
 
-	if (string == NULL || string[0] == '\0' || string_length == 0)
-		return (-1);
-	env_var = environ;
-	while (*env_var != NULL)
-	{
-		if (_strcmp(*env_var, string) == 0)
-		{
-			*env_var = _strdup(string);
-			if (*env_var == NULL)
-				return (-1);
-			return (0);
-		}
-		env_var++;
-	}
+    if (string == NULL || string[0] == '\0' || string_length == 0)
+        return (-1);
 
-	new_environ = (char **)realloc(environ, (env_var - environ + 2) * sizeof(char *));
-	if (new_environ == NULL)
-		return (-1);
+    env_var = environ;
+    while (*env_var != NULL)
+    {
+        if (_strcmp(*env_var, string) == 0)
+        {
+            *env_var = _strdup(string);
+            if (*env_var == NULL)
+                return (-1);
+            return (0);
+        }
+        env_var++;
+    }
 
-	new_environ[env_var - environ] = _strdup(string);
-	if (new_environ[env_var - environ] == NULL)
-		return (-1);
+    env_count = env_var - environ;
+    new_environ = (char **)malloc((env_count + 2) * sizeof(char *));
+    if (new_environ == NULL)
+        return (-1);
 
-	new_environ[env_var - environ + 1] = NULL;
-	environ = new_environ;
+    for (i = 0; i < env_count; i++)
+    {
+        new_environ[i] = _strdup(environ[i]);
+        if (new_environ[i] == NULL)
+        {
+            for (j = 0; j < i; j++)
+                free(new_environ[j]);
+            free(new_environ);
+            return (-1);
+        }
+    }
 
-	return (0);
+    new_environ[env_count] = _strdup(string);
+    if (new_environ[env_count] == NULL)
+    {
+        for (i = 0; i < env_count; i++)
+            free(new_environ[i]);
+        free(new_environ);
+        return (-1);
+    }
+
+    new_environ[env_count + 1] = NULL;
+
+    environ = new_environ;
+
+    return (0);
 }
