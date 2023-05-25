@@ -124,6 +124,13 @@ int _strcmp(const char *str1, const char *str2)
 
 	return (-1);
 }
+/**
+ *_strncmp - compares a string to another
+ *@s1: Is the first string we are comparing with
+ *@s1: Is the string we are comparing
+ *@n: Is the number of byte in the string being compared
+ *Return: 0 if the number of string compare is the same
+ */
 int _strncmp(const char *s1, const char *s2, size_t n)
 {
 	while (n > 0)
