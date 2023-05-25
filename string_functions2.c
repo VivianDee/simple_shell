@@ -112,7 +112,7 @@ char *remove_trailing_spaces(char *input)
 /**
  * check_exit - Exits thr code
  * @input: shell input
- * 
+ *
  */
 void check_exit(char *input)
 {
@@ -122,7 +122,7 @@ void check_exit(char *input)
 	{
 		if (_strlen(input) > 4)
 		{
-			while(input[i] != '\0')
+			while (input[i] != '\0')
 			{
 				if (input[i] >= '0' || input[i] <= '9')
 				{
