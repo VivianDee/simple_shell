@@ -96,6 +96,7 @@ int check_builtin(char *parameters[], char *input)
 		{
 			exit_code = atoi(parameters[1]);
 			_setenv("LASTEXITCODE", parameters[1], 1);
+			free_parameter_array(environ);
 			free_parameter_array(parameters);
 			free(input);
 			exit(exit_code);
@@ -103,6 +104,7 @@ int check_builtin(char *parameters[], char *input)
 		else
 		{
 			free_parameter_array(parameters);
+			free_parameter_array(environ);
 			free(input);
 			exit(0);
 		}
