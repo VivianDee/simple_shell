@@ -6,13 +6,29 @@
  *@parameters: Is the command line args
  *Return: void
  */
+
 void remove_comments(char *parameters[])
 {
-	int i;
+	int i = 0, len = 0;
 
-	for (i = 0; parameters[i] != NULL; i++)
+	while (parameters[i] != NULL)
+	{
+		len++;
+		i++;
+	}
+
+	for (i = 0; i < len; i++)
 	{
 		if (_strstr(parameters[i], "#") != NULL)
+		{
+			free(parameters[i]);
 			parameters[i] = NULL;
+			while (i <= len)
+			{
+				free(parameters[i]);
+				parameters[i] = NULL;
+				i++;
+			}
+		}
 	}
 }
