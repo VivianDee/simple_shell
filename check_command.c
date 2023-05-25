@@ -22,6 +22,7 @@ int check_command(char *input, char *programName)
 		logicalOps[k] = NULL;
 		parameters[k] = NULL;
 	}
+	check_exit(input);
 	remove_leading_spaces(input);
 	remove_trailing_spaces(input);
 	for (k = 0; delimiters[k] != NULL; k++)

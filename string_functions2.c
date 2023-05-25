@@ -108,3 +108,34 @@ char *remove_trailing_spaces(char *input)
 
 	return (input_copy);
 }
+
+/**
+ * check_exit - Exits thr code
+ * @input: shell input
+ * 
+ */
+void check_exit(char *input)
+{
+	int exit_code = 0, i = 4;
+
+	if (_strncmp(input, "exit", 4) == 0)
+	{
+		if (_strlen(input) > 4)
+		{
+			while(input[i] != '\0')
+			{
+				if (input[i] >= '0' || input[i] <= '9')
+				{
+					exit_code = (exit_code * 10) + (input[i] - '0');
+					free(input);
+					exit(exit_code);
+				}
+			}
+		}
+		else
+		{
+			free(input);
+			exit(0);
+		}
+	}
+}
