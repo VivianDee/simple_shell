@@ -1,6 +1,4 @@
 #include "main.h"
-
-
 /**
   * check_command - Screen the command line input for logical
   *operators and parses them accordingly
@@ -79,7 +77,6 @@ int command_exists(char *parameters[], char *programName, struct data *data)
 		_setenv("LASTEXITCODE", "127", 1);
 		return (0);
 	}
-
 	return (1);
 }
 
@@ -133,7 +130,6 @@ int check_builtin(char *parameters[], char *input)
 		if (_strstr(parameters[1], "$") != NULL)
 			return (echo_command(parameters));
 	}
-
 	return (0);
 }
 
@@ -184,7 +180,6 @@ int command_buffer(char *input, char *parameter[], int *len)
 		free(parameter[0]);
 		parameter[0] = _strdup(path);
 	}
-
 	return (background);
 }
 
