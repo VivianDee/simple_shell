@@ -1,5 +1,11 @@
 #include "main.h"
-
+/**
+ *_memcpy - copies a string to another memory location
+ *@dest: Is the destination which we are copying to
+ *@src: Is the source from where the copying is done
+ *@n: Is the number of byte being copied to destination
+ *Return: Void
+ */
 void *_memcpy(void *dest, const void *src, size_t n)
 {
 	unsigned char *d = (unsigned char *)dest;
@@ -16,7 +22,11 @@ void *_memcpy(void *dest, const void *src, size_t n)
 
 	return (dest);
 }
-
+/**
+ *_strdup - copies a string to another memory location
+ *@src: Is the source from which the copying is done
+ *Return: pointer the new location of the string
+ */
 char *_strdup(const char *source)
 {
 	char *destination;
