@@ -97,7 +97,7 @@ int check_builtin(char *parameters[], char *input)
 	remove_comments(parameters);
 	if (parameters[0] && _strcmp(parameters[0], "exit") == 0)
 	{
-		if (parameters[1])
+		if (atoi(parameters[1]))
 		{
 			exit_code = atoi(parameters[1]);
 			_setenv("LASTEXITCODE", parameters[1], 1);
@@ -106,7 +106,7 @@ int check_builtin(char *parameters[], char *input)
 			free(input);
 			exit(exit_code);
 		}
-		else
+		else if (!parameters[1])
 		{
 			free_parameter_array(parameters);
 			free_parameter_array(environ);
