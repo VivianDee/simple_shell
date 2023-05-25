@@ -27,6 +27,8 @@ typedef struct data
 	char command[LETTERS];
 } data;
 
+char *remove_leading_spaces(char *input);
+char *remove_trailing_spaces(char *input);
 void _vsnprintf(const char *format, va_list args, ssize_t *totalBytesWritten);
 void free_parameter_array(char *parameter[]);
 int command_buffer(char *input, char *parameter[], int *len);

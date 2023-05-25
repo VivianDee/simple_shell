@@ -51,3 +51,60 @@ int _strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
+
+
+/**
+  * remove_leading_spaces - Removes leading spaces
+  * @input: Input string
+  *
+  * Return: A copy of the string
+  */
+char *remove_leading_spaces(char *input)
+{
+	int i, j;
+	char *input_copy = input;
+
+	for (i = 0, j = 0; input_copy[i] != '\0'; i++)
+	{
+		if (input_copy[i] != ' ')
+		{
+			break;
+		}
+	}
+
+	while (input_copy[i] != '\0')
+	{
+		input_copy[j] = input_copy[i];
+		i++;
+		j++;
+	}
+
+	input_copy[j] = '\0';
+
+	return (input_copy);
+}
+
+/**
+  * remove_trailing_spaces - Removes trailing spaces
+  * @input: Input string
+  *
+  * Return: A copy of the string
+  */
+char *remove_trailing_spaces(char *input)
+{
+	int i;
+	size_t len = _strlen(input);
+	char *input_copy = input;
+
+	for (i = len - 1; i >= 0; i--)
+	{
+		if (input_copy[i] != ' ')
+		{
+			break;
+		}
+	}
+
+	input_copy[i + 1] = '\0';
+
+	return (input_copy);
+}

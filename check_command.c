@@ -17,11 +17,13 @@ int check_command(char *input, char *programName)
 	int count = 0, i = 0, k = 0, len = -1;
 	struct data data = {"\0"};
 
-	for(k = 0; k < LETTERS; k++)
+	for (k = 0; k < LETTERS; k++)
 	{
 		logicalOps[k] = NULL;
 		parameters[k] = NULL;
 	}
+	remove_leading_spaces(input);
+	remove_trailing_spaces(input);
 	for (k = 0; delimiters[k] != NULL; k++)
 		if (_strstr(input, delimiters[k]) != NULL)
 			remove_spaces_around_delimiter(input, delimiters[i]);
