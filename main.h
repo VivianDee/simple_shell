@@ -27,6 +27,7 @@ typedef struct data
 	char command[LETTERS];
 } data;
 
+void _vsnprintf(const char *format, va_list args, ssize_t *totalBytesWritten);
 void free_parameter_array(char *parameter[]);
 int command_buffer(char *input, char *parameter[], int *len);
 void print_error(char *programName, const char *format, ...);

@@ -97,7 +97,6 @@ int _putenv(const char *string)
 	new_environ[env_count] = _strdup(string);
 
 	new_environ[env_count + 1] = NULL;
-	free(environ);
 	environ = new_environ;
 
 	return (0);
