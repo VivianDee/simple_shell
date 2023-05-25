@@ -48,8 +48,11 @@ char *_strdup(const char *source)
 
 	return (destination);
 }
-
-
+/**
+ *_strlen - determines the length of a string
+ *@str: pointer to the string whose length is determined
+ *Return: the length of the string
+ */
 size_t _strlen(const char *str)
 {
 	size_t len = 0;
@@ -62,7 +65,12 @@ size_t _strlen(const char *str)
 
 	return (len);
 }
-
+/**
+ *_strstr - Looks for the occurence of a string in an array
+ *@haystack: Is the array of string
+ *@needle: Is the string being searched
+ *Return: pointer the new location of the string
+ */
 char *_strstr(const char *haystack, const char *needle)
 {
 	int i, j, k;
@@ -88,8 +96,13 @@ char *_strstr(const char *haystack, const char *needle)
 
 	return (NULL);
 }
-
-
+/**
+ *_strcmp - compares one string to another
+ *@str1: Is the string we are comparing to
+ *@str2: Is the exact string we are comparing
+ *Return: 0 if the string compared is the same,
+ *1 if the first is greater or -1 if the second is greater
+ */
 int _strcmp(const char *str1, const char *str2)
 {
 	int i, j;
