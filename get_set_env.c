@@ -9,11 +9,15 @@
  */
 int _setenv(const char *name, const char *value, int overwrite)
 {
-	size_t name_length = _strlen(name);
-	size_t value_length = _strlen(value);
-	size_t entry_length = name_length + value_length + 2;
+	size_t name_length = 0;
+	size_t value_length = 0;
+	size_t entry_length = 0;
 	char env_entry[LETTERS];
 	int result = 0;
+
+	name_length = _strlen(name);
+	value_length = _strlen(value);
+	entry_length = name_length + value_length + 2;
 
 	if (name == NULL || value == NULL)
 		return (-1);
