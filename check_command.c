@@ -9,15 +9,19 @@
   *
   * Return: Void
   */
-void check_command(char *input, char *programName)
+int check_command(char *input, char *programName)
 {
 	char *input_copy = input, *delimiters[] = {"&&", "||", ";", NULL};
-	char error_no[10];
 	char *parameters[LETTERS], *logicalOps[LETTERS], *token;
 	int isbuiltin = 0, it_exists = 0, status = 0, background = 0;
 	int count = 0, i = 0, k = 0, len = -1;
 	struct data data = {"\0"};
 
+	for(k = 0; k < LETTERS; k++)
+	{
+		logicalOps[k] = NULL;
+		parameters[k] = NULL;
+	}
 	for (k = 0; delimiters[k] != NULL; k++)
 		if (_strstr(input, delimiters[k]) != NULL)
 			remove_spaces_around_delimiter(input, delimiters[i]);
@@ -40,8 +44,6 @@ void check_command(char *input, char *programName)
 		if (!isbuiltin && it_exists && status)
 		{
 			status = execute_command(parameters, background, programName, &data);
-			sprintf(error_no, "%d", status);
-			_setenv("LASTEXITCODE", error_no, 1);
 		}
 		token = _strtok2_strings(NULL, delimiters);
 		count--;
@@ -49,6 +51,7 @@ void check_command(char *input, char *programName)
 		free_parameter_array(parameters);
 	}
 	free(input);
+	return (status);
 }
 
 /**

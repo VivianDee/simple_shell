@@ -44,7 +44,7 @@ int execute_command(char *pmeters[], int bg, char *programName, data *data);
 void remove_spaces_around_delimiter(char *input, const char *delimiter);
 int countDelimiter(char *input, char *delimiters[], char *logicalOps[]);
 void error_data(struct data *data, char *token);
-void check_command(char *input, char *programName);
+int check_command(char *input, char *programName);
 int _putenv(const char *string);
 void handle_sig(int signo);
 char *_strdup(const char *source);

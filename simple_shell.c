@@ -26,6 +26,7 @@ int main(int ac, char *av[])
 	char *input = NULL;
 	size_t len = 0;
 	ssize_t read_chars;
+	int status = 0;
 
 	ac = ac;
 
@@ -41,7 +42,11 @@ int main(int ac, char *av[])
 		read_chars = _getline(&input, &len, stdin);
 		if (read_chars <= 0)
 		{
-			if (isatty(fileno(stdin)))
+			if (!isatty(fileno(stdin)))
+			{
+				free(input);
+				exit(0);
+			}
 			perror("_getline");
 			free(input);
 			return (-1);
@@ -52,10 +57,10 @@ int main(int ac, char *av[])
 			exit(0);
 		}
 		input = _strtok(input, "\n");
-		check_command(input, av[0]);
+		status = check_command(input, av[0]);
 		fflush(stdout);
 		fflush(stdout);
 	}
 
-	return (0);
+	exit(status);
 }

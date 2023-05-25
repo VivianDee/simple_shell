@@ -25,7 +25,6 @@ int execute_command(char *pmeters[], int bg, char *programName, data *data)
 		if (!bg)
 		{
 			waitpid(pid, &status, 0);
-			update_pwd_in_env();
 			return (WEXITSTATUS(status));
 		}
 	}
