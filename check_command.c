@@ -94,8 +94,10 @@ int check_builtin(char *parameters[], char *input)
 {
 	int exit_code = 0;
 
+	if (parameters[0] && _strcmp(parameters[0], "#") == 0)
+		return (1);
 	remove_comments(parameters);
-	if (parameters[0] && _strstr(parameters[0], "exit") != NULL)
+	if (parameters[0] && _strcmp(parameters[0], "exit") == 0)
 	{
 		if (parameters[1])
 		{
@@ -114,12 +116,12 @@ int check_builtin(char *parameters[], char *input)
 			exit(0);
 		}
 	}
-	if (parameters[0] && _strstr(parameters[0], "cd") != NULL)
+	if (parameters[0] && _strcmp(parameters[0], "cd") == 0)
 	{
 		change_directory(parameters);
 		return (1);
 	}
-	if (_strstr(parameters[0], "echo") != NULL)
+	if (_strcmp(parameters[0], "echo") == 0)
 	{
 		if (parameters[1] == NULL)
 		{
