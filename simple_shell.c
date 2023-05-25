@@ -2,7 +2,7 @@
 #include <signal.h>
 
 /**
- *sig_handler - Handles the signal interrupt signal
+ *handle_sig - Handles the signal interrupt signal
  *@signo: Is the signal number received by the process
  *Return: Void
  */
@@ -28,7 +28,7 @@ int main(int ac, char *av[])
 	ssize_t read_chars;
 
 	ac = ac;
-	
+
 	signal(SIGINT, handle_sig);
 
 	while (1)

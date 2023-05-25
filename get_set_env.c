@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ *_setenv - sets the environment variable
+ *@name: is the name of the environment
+ *@value: is the value of the set environment
+ *@overwrite: it determines whether to set or unset variable
+ *Return: the result of the set env.
+ */
 int _setenv(const char *name, const char *value, int overwrite)
 {
 	size_t name_length = _strlen(name);
@@ -23,28 +30,35 @@ int _setenv(const char *name, const char *value, int overwrite)
 
 	return (result);
 }
-
+/**
+ *_getenv - gets the environment from the env array
+ *@name: is the name in the variable
+ *Return: NULL
+ */
 char *_getenv(const char *name)
 {
-	    char **environment = NULL;
-	   size_t name_length = 0;
+	char **environment = NULL;
+	size_t name_length = 0;
 
-	    if (name == NULL)
-		    return (NULL);
+	if (name == NULL)
+		return (NULL);
+	name_length = _strlen(name);
 
-	 name_length = _strlen(name);
-
-	    environment = environ;
-	    while (*environment != NULL)
-	    {
-		    if (_strcmp(*environment, name) == 0 && (*environment)[name_length] == '=')
-			    return (&((*environment)[name_length + 1]));
-		    environment++;
-	    }
-
-	    return (NULL);
+	environment = environ;
+	while (*environment != NULL)
+	{
+		if (_strcmp(*environment, name) == 0 && (*environment)[name_length] == '=')
+			return (&((*environment)[name_length + 1]));
+		environment++;
+	}
+	return (NULL);
 }
 
+/**
+ *_putenv - Install an environment variable into env
+ *@string: is the string as variable to be put in environ
+ *Return: 0 on success
+ */
 int _putenv(const char *string)
 {
 	char *new_environ[LETTERS], **env_var = NULL;
