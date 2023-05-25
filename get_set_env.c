@@ -48,7 +48,7 @@ char *_getenv(const char *name)
 int _putenv(const char *string)
 {
 	char *new_environ[LETTERS], **env_var = NULL;
-	size_t string_length = _strlen(string), i, env_count;
+	size_t string_length = _strlen(string), i = 0, env_count = 0;
 
 	for (i = 0; i < LETTERS; i++)
 		new_environ[i] = NULL;
@@ -79,7 +79,7 @@ int _putenv(const char *string)
 	new_environ[env_count] = _strdup(string);
 
 	new_environ[env_count + 1] = NULL;
-
+	free(environ);
 	environ = new_environ;
 
 	return (0);
