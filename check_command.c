@@ -92,6 +92,8 @@ int check_builtin(char *parameters[], char *input)
 	int exit_code = 0;
 
 	/*This part takes care of execution of builtin commands*/
+	if (parameters[0] == NULL)
+		return (1);
 	if (parameters[0] && _strcmp(parameters[0], "#") == 0)
 		return (1);
 	remove_comments(parameters);
