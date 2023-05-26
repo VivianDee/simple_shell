@@ -159,6 +159,7 @@ int command_buffer(char *input, char *parameter[], int *len)
 		return (1);
 	*len = i;
 
+	/*Checks for buiilt-in command*/
 	if (_strstr(parameter[0], "exit") != NULL)
 	{
 		background = 1;
@@ -192,6 +193,7 @@ void free_parameter_array(char *parameter[])
 {
 	int i;
 
+	/*This frees all spaces allocated for parameter*/
 	for (i = 0; parameter[i] != NULL; i++)
 	{
 		free(parameter[i]);
