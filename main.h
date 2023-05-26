@@ -27,6 +27,8 @@ typedef struct data
 	char command[LETTERS];
 } data;
 
+void replaceChar(char *str);
+char* _strchr(const char* str, char c);
 int check_exit(char *input);
 char *remove_leading_spaces(char *input);
 char *remove_trailing_spaces(char *input);

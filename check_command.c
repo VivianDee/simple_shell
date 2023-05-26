@@ -21,8 +21,6 @@ int check_command(char *input, char *programName)
 		parameters[k] = NULL;
 	}
 	check_exit(input);
-	remove_leading_spaces(input);
-	remove_trailing_spaces(input);
 	for (k = 0; delimiters[k] != NULL; k++)
 		if (_strstr(input, delimiters[k]) != NULL)
 			remove_spaces_around_delimiter(input, delimiters[i]);
@@ -30,6 +28,8 @@ int check_command(char *input, char *programName)
 	token = _strtok2_strings(input_copy, delimiters);
 	while (token != NULL)
 	{
+		remove_leading_spaces(token);
+		remove_trailing_spaces(token);
 		error_data(&data, token);
 		background = command_buffer(token, parameters, &len);
 		isbuiltin = check_builtin(parameters, input);
@@ -74,7 +74,6 @@ int command_exists(char *parameters[], char *programName, struct data *data)
 	else if (execve(parameters[0], parameters, NULL) < 0)
 	{
 		print_error(programName, "%s: %s", data->command, strerror(errno));
-		_setenv("LASTEXITCODE", "127", 1);
 		return (0);
 	}
 	return (1);
@@ -143,7 +142,7 @@ int check_builtin(char *parameters[], char *input)
  */
 int command_buffer(char *input, char *parameter[], int *len)
 {
-	int i = 0, background = 0;
+	int i = 0, j = 0, k = 0, background = 0;
 	char path[100];
 
 	parameter[i] = _strtok(input, " \n\t\r");
@@ -154,6 +153,19 @@ int command_buffer(char *input, char *parameter[], int *len)
 		parameter[i] = _strtok(NULL, " \n");
 	}
 	parameter[i] = NULL;
+
+	while (j < i)
+	{
+		if (_strcmp(parameter[j], "\0") == 0)
+		{
+			for (k = j; k < i - 1; k++)
+				parameter[k] = parameter[k + 1];
+			parameter[i - 1] = NULL;
+			i--;
+			continue;
+		}
+		j++;
+	}
 
 	if (i == 0)
 		return (1);

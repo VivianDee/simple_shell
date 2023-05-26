@@ -56,6 +56,8 @@ int main(int ac, char *av[])
 			fflush(stdout);
 			exit(0);
 		}
+		if (!isatty(fileno(stdin)))
+		replaceChar(input);
 		input = _strtok(input, "\n");
 		status = check_command(input, av[0]);
 		fflush(stdout);

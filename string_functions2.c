@@ -9,22 +9,15 @@
  */
 int _strcmp(const char *str1, const char *str2)
 {
-	int i, j;
+	int i = 0;
 
-	for (i = 0; str1[i] != '\0'; i++)
+	for (i = 0; str1[i] != '\0' || str2[i] != '\0'; i++)
 	{
-		if (str1[i] == str2[0])
-		{
-			for (j = 1; str2[j] != '\0'; j++)
-			{
-				if (str1[i + j] != str2[j])
-					break;
-			}
-			if (str2[j] == '\0')
-				return (0);
-		}
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
 	}
-	return (-1);
+
+	return (0);	
 }
 /**
  *_strncmp - compares a string to another
