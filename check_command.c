@@ -83,6 +83,9 @@ int command_exists(char *parameters[], char *programName, struct data *data)
  *shell builtin command.
  *@input: Is the actual input by user before splitting occurs
  *@parameters: is the refined strings from the user's input
+ *@programName: Is the name of the executable
+ *@data: is the variable for accessing the struct data
+ *@count: is the number of command run
  *Return: 1 or 0 depending on the condition of whether a command
  *is builtin or not
  */
