@@ -27,6 +27,7 @@ typedef struct data
 	char command[LETTERS];
 } data;
 
+char *_strcpy(char *dest, const char *src);
 void replaceChar(char *str);
 char* _strchr(const char* str, char c);
 char *remove_leading_spaces(char *input);
@@ -49,7 +50,6 @@ void remove_spaces_around_delimiter(char *input, const char *delimiter);
 int countDelimiter(char *input, char *delimiters[], char *logicalOps[]);
 void error_data(struct data *data, char *token);
 int check_command(char *input, char *programName);
-int _putenv(const char *string);
 void handle_sig(int signo);
 char *_strdup(const char *source);
 char *_getenv(const char *name);

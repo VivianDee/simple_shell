@@ -104,7 +104,10 @@ int check_builtin(char *parameters[], char *input, char *programName, struct dat
 		if (parameters[1])
 		{
 			if (parameters[1][0] == '0')
+			{
+				free_parameter_array(parameters);
 				exit(0);
+			}
 			else if (atoi(parameters[1]))
 			{
 				exit_code = atoi(parameters[1]);

@@ -9,31 +9,41 @@
  */
 int _setenv(const char *name, const char *value, int overwrite)
 {
-	size_t name_length = 0;
-	size_t value_length = 0;
-	size_t entry_length = 0;
-	char env_entry[LETTERS];
-	int result = 0;
+	int i, name_length = 0, value_length = 0, entry_length = 0;
+	char new_env[LETTERS];
 
 	name_length = _strlen(name);
 	value_length = _strlen(value);
 	entry_length = name_length + value_length + 2;
 
-	if (name == NULL || value == NULL)
-		return (-1);
+	_memcpy(new_env, name, name_length);
+	new_env[name_length] = '=';
+	_memcpy(new_env + name_length + 1, value, value_length);
+	new_env[entry_length - 1] = '\0';
 
-	if (!overwrite && _getenv(name) != NULL)
-		return (0);
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		if (_strstr(environ[i], name) != NULL)
+		{
+			if (overwrite)
+			{
+				_strcpy(environ[i] + name_length + 1, value);
+				return (0);
+			} else
+			{
+				return (1);
+			}
+		}
+	}
 
-	_memcpy(env_entry, name, name_length);
-	env_entry[name_length] = '=';
-	_memcpy(env_entry + name_length + 1, value, value_length);
-	env_entry[entry_length - 1] = '\0';
-
-	result = _putenv(env_entry);
-
-	return (result);
+	if (!overwrite)
+	{
+		environ[i] = new_env;
+		environ[i + 1] = NULL;
+	}
+	return (0);
 }
+
 /**
  *_getenv - gets the environment from the env array
  *@name: is the name in the variable
@@ -41,63 +51,17 @@ int _setenv(const char *name, const char *value, int overwrite)
  */
 char *_getenv(const char *name)
 {
-	char **environment = NULL;
-	size_t name_length = 0;
+	int i, name_length = 0;
 
-	if (name == NULL)
-		return (NULL);
 	name_length = _strlen(name);
 
-	environment = environ;
-	while (*environment != NULL)
+	for (i = 0; environ[i] != NULL; i++)
 	{
-		if (_strcmp(*environment, name) == 0 && (*environment)[name_length] == '=')
-			return (&((*environment)[name_length + 1]));
-		environment++;
-	}
-	return (NULL);
-}
-
-/**
- *_putenv - Install an environment variable into env
- *@string: is the string as variable to be put in environ
- *Return: 0 on success
- */
-int _putenv(const char *string)
-{
-	char *new_environ[LETTERS], **env_var = NULL;
-	size_t string_length = _strlen(string), i = 0, env_count = 0;
-
-	for (i = 0; i < LETTERS; i++)
-		new_environ[i] = NULL;
-
-	if (string == NULL || string[0] == '\0' || string_length == 0)
-		return (-1);
-
-	env_var = environ;
-	while (*env_var != NULL)
-	{
-		if (_strcmp(*env_var, string) == 0)
+		if (_strncmp(environ[i], name, name_length) == 0 && environ[i][name_length] == '=')
 		{
-			*env_var = _strdup(string);
-			if (*env_var == NULL)
-				return (-1);
-			return (0);
+			return (environ[i] + name_length + 1);
 		}
-		env_var++;
 	}
 
-	env_count = env_var - environ;
-
-	for (i = 0; i < env_count; i++)
-	{
-		new_environ[i] = _strdup(environ[i]);
-	}
-
-	new_environ[env_count] = _strdup(string);
-
-	new_environ[env_count + 1] = NULL;
-	environ = new_environ;
-
-	return (0);
+	return (NULL);
 }
