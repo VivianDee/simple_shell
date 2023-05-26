@@ -17,7 +17,7 @@ int _strcmp(const char *str1, const char *str2)
 			return (str1[i] - str2[i]);
 	}
 
-	return (0);	
+	return (0);
 }
 /**
  *_strncmp - compares a string to another
