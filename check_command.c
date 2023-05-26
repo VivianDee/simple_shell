@@ -92,6 +92,7 @@ int check_builtin(char *parameters[], char *input)
 {
 	int exit_code = 0;
 
+	/*This part takes care of execution of builtin commands*/
 	if (parameters[0] && _strcmp(parameters[0], "#") == 0)
 		return (1);
 	remove_comments(parameters);
@@ -146,6 +147,7 @@ int command_buffer(char *input, char *parameter[], int *len)
 	int i = 0, background = 0;
 	char path[100];
 
+	/*Split string into token and populates the parameter buf*/
 	parameter[i] = _strtok(input, " \n\t\r");
 	while (parameter[i] != NULL)
 	{
@@ -159,7 +161,7 @@ int command_buffer(char *input, char *parameter[], int *len)
 		return (1);
 	*len = i;
 
-	/*Checks for buiilt-in command*/
+	/*Checks for buiilt-in command, call the right function and return*/
 	if (_strstr(parameter[0], "exit") != NULL)
 	{
 		background = 1;
