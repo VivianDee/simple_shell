@@ -31,7 +31,7 @@ int check_command(char *input, char *programName)
 		remove_trailing_spaces(token);
 		error_data(&data, token);
 		background = command_buffer(token, parameters, &len);
-		isbuiltin = check_builtin(parameters, input);
+		isbuiltin = check_builtin(parameters, input, programName, &data, (i + 1));
 		if (!isbuiltin)
 			status += (it_exists = command_exists(parameters, programName, &data));
 		if (count >= 0 && i > 0)
@@ -86,9 +86,9 @@ int command_exists(char *parameters[], char *programName, struct data *data)
  *Return: 1 or 0 depending on the condition of whether a command
  *is builtin or not
  */
-int check_builtin(char *parameters[], char *input)
+int check_builtin(char *parameters[], char *input, char *programName, struct data *data, int count)
 {
-	int exit_code = 0;
+	int exit_code = -1;
 
 	/*This part takes care of execution of builtin commands*/
 	if (parameters[0] == NULL)
@@ -100,13 +100,21 @@ int check_builtin(char *parameters[], char *input)
 	{
 		if (parameters[1])
 		{
-			if (atoi(parameters[1]))
+			if (parameters[1][0] == '0')
+				exit(0);
+			else if (atoi(parameters[1]))
 			{
 				exit_code = atoi(parameters[1]);
-				free_parameter_array(parameters);
-				free(input);
-				exit(exit_code);
+				if (exit_code >= 0)
+				{
+					free_parameter_array(parameters);
+					free(input);
+					exit(exit_code);
+				}
 			}
+
+			print_error(programName, "%d: %s: Illegal number: %s", count, data->command, parameters[1]);
+			return (1);
 		}
 		else if (!parameters[1])
 		{

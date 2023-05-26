@@ -42,7 +42,7 @@ void update_pwd_in_env(void);
 void change_directory(char *parameters[]);
 void remove_comments(char *parameters[]);
 int echo_command(char *parameters[]);
-int check_builtin(char *parameters[], char *input);
+int check_builtin(char *parameters[], char *input, char *programName, struct data *data, int count);
 int command_exists(char *parameters[], char *programName, data *data);
 int execute_command(char *pmeters[], int bg, char *programName, data *data);
 void remove_spaces_around_delimiter(char *input, const char *delimiter);

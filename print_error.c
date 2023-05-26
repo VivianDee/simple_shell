@@ -42,9 +42,8 @@ void print_error(char *programName, const char *format, ...)
 void _vsnprintf(const char *format, va_list args, ssize_t *totalBytesWritten)
 {
 	const char *ptr = format, *str = NULL;
-	char numStr[12];
-	ssize_t strLen = 0, numLen = 0;
-	int num;
+	char digitChar;
+	ssize_t strLen = 0, numLen = 0, tempNum = 0, divisor = 0, num = 0;
 
 	while (*ptr != '\0')
 	{
@@ -61,9 +60,29 @@ void _vsnprintf(const char *format, va_list args, ssize_t *totalBytesWritten)
 			else if (*ptr == 'd')
 			{
 				num = va_arg(args, int);
-				numLen = num / 10;
-				write(STDERR_FILENO, numStr, numLen);
-				*totalBytesWritten += numLen;
+				tempNum = num;
+				if (tempNum < 0)
+				{
+					write(STDERR_FILENO, "-", 1);
+					*totalBytesWritten += 1;
+					tempNum = -tempNum;
+				}
+
+				divisor = 1;
+				while (tempNum / divisor > 9)
+				{
+					divisor *= 10;
+				}
+				while (divisor > 0)
+				{
+					digitChar = '0' + (tempNum / divisor);
+					write(STDERR_FILENO, &digitChar, 1);
+					*totalBytesWritten += 1;
+					numLen += 1;
+					tempNum %= divisor;
+					divisor /= 10;
+				}
+
 			}
 			else
 			{
