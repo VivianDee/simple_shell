@@ -20,7 +20,6 @@ int check_command(char *input, char *programName)
 		logicalOps[k] = NULL;
 		parameters[k] = NULL;
 	}
-	check_exit(input);
 	for (k = 0; delimiters[k] != NULL; k++)
 		if (_strstr(input, delimiters[k]) != NULL)
 			remove_spaces_around_delimiter(input, delimiters[i]);
@@ -99,19 +98,19 @@ int check_builtin(char *parameters[], char *input)
 	remove_comments(parameters);
 	if (parameters[0] && _strcmp(parameters[0], "exit") == 0)
 	{
-		if (atoi(parameters[1]))
+		if (parameters[1])
 		{
-			exit_code = atoi(parameters[1]);
-			_setenv("LASTEXITCODE", parameters[1], 1);
-			free_parameter_array(environ);
-			free_parameter_array(parameters);
-			free(input);
-			exit(exit_code);
+			if (atoi(parameters[1]))
+			{
+				exit_code = atoi(parameters[1]);
+				free_parameter_array(parameters);
+				free(input);
+				exit(exit_code);
+			}
 		}
 		else if (!parameters[1])
 		{
 			free_parameter_array(parameters);
-			free_parameter_array(environ);
 			free(input);
 			exit(0);
 		}
