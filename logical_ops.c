@@ -43,11 +43,11 @@ void remove_spaces_around_delimiter(char *input, const char *delimiter)
 	}
 }
 /**
- *countDelimiter - It counts the number of delimeters present
- *@input: is the user input
- *@delimiters: This are the array options passed as delimiters
- *@logicalOps: They are the array of logical operators given
- *Return: the number of delimeters
+ *countDelimiter - It counts the number of delimeters present.
+ *@input: is the user input.
+ *@delimiters: This are the array options passed as delimiters.
+ *@logicalOps: They are the array of logical operators given.
+ *Return: the number of delimeters.
  */
 int countDelimiter(char *input, char *delimiters[], char *logicalOps[])
 {
