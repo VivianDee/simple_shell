@@ -63,6 +63,5 @@ int main(int ac, char *av[])
 		fflush(stdout);
 		fflush(stdout);
 	}
-
 	exit(status);
 }
