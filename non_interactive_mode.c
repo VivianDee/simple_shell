@@ -4,7 +4,6 @@
  *_strchr - Locates a character in a string
  *@str: The string to search
  *@c: The character to locate
- *
  *Return: position of the character in the string*
  */
 char *_strchr(const char *str, char c)
