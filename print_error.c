@@ -6,7 +6,7 @@
  * @format: The format string for the error message.
  * @...: Additional arguments for the format string.
  * @programName: The name of the program.
- *
+ * Return: Void
  */
 void print_error(char *programName, const char *format, ...)
 {
@@ -37,7 +37,7 @@ void print_error(char *programName, const char *format, ...)
  * @format: The format string for the error message.
  * @args: A va_list
  * @totalBytesWritten: Number of chars written to stderr
- *
+ * Return: Void
  */
 void _vsnprintf(const char *format, va_list args, ssize_t *totalBytesWritten)
 {
