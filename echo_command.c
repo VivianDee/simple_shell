@@ -9,8 +9,7 @@
  */
 int echo_command(char *parameters[])
 {
-	char *variable = _getenv(parameters[1] + 1);
-	char *last_exit_code = _getenv("LASTEXITCODE");
+	char *variable = _getenv(parameters[1] + 1), *last_exit_code = _getenv("LASTEXITCODE");
 	pid_t id = getpid();
 
 	if (parameters[1][1] == '?' && last_exit_code)

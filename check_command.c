@@ -120,7 +120,7 @@ int check_builtin(char *parameters[], char *input, char *programName, struct dat
 			}
 
 			print_error(programName, "%d: %s: Illegal number: %s", count, data->command, parameters[1]);
-			return (1);
+			exit(2);
 		}
 		else if (!parameters[1])
 		{
