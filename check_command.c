@@ -101,6 +101,12 @@ int check_builtin(char *parameters[], char *input, char *programName, struct dat
 	remove_comments(parameters);
 	if (parameters[0] && _strcmp(parameters[0], "exit") == 0)
 	{
+		if (count == 2)
+		{
+			free_parameter_array(parameters);
+			free(input);
+			exit(2);
+		}
 		if (parameters[1])
 		{
 			if (parameters[1][0] == '0')
