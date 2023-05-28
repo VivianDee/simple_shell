@@ -106,6 +106,7 @@ int check_builtin(char *parameters[], char *input, char *programName, struct dat
 			if (parameters[1][0] == '0')
 			{
 				free_parameter_array(parameters);
+				free (input);	
 				exit(0);
 			}
 			else if (atoi(parameters[1]))
@@ -120,6 +121,8 @@ int check_builtin(char *parameters[], char *input, char *programName, struct dat
 			}
 
 			print_error(programName, "%d: %s: Illegal number: %s", count, data->command, parameters[1]);
+			free_parameter_array(parameters);
+                                        free(input);
 			exit(2);
 		}
 		else if (!parameters[1])
